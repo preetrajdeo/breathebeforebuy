@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Breathe Before You Buy - Settings</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 350px;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .setting {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+
+    .setting-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .setting-label {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .setting-description {
+      font-size: 12px;
+      opacity: 0.8;
+      margin-bottom: 12px;
+    }
+
+    .toggle {
+      position: relative;
+      width: 50px;
+      height: 26px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 13px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .toggle.active {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .toggle-slider {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.3s;
+    }
+
+    .toggle.active .toggle-slider {
+      transform: translateX(24px);
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 16px;
+      font-family: inherit;
+    }
+
+    input[type="number"]::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .stats {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .stats-title {
+      font-size: 12px;
+      opacity: 0.8;
+      margin-bottom: 8px;
+    }
+
+    .stats-number {
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    .footer {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 12px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧘 Breathe Before Buy</h1>
+  <p>Pause and breathe before making purchases to reduce impulse buying</p>
+
+  <div class="setting">
+    <div class="setting-header">
+      <span class="setting-label">Enable Breathing Intervention</span>
+      <div class="toggle active" id="enabled-toggle">
+        <div class="toggle-slider"></div>
+      </div>
+    </div>
+    <div class="setting-description">
+      Automatically triggers breathing exercise before checkout
+    </div>
+  </div>
+
+  <div class="setting">
+    <div class="setting-label">Number of Breaths</div>
+    <div class="setting-description">How many breath cycles to complete (3-10)</div>
+    <input type="number" id="breath-count" min="3" max="10" value="3">
+  </div>
+
+  <div class="setting">
+    <div class="setting-label">Inhale Duration (seconds)</div>
+    <div class="setting-description">How long to breathe in (4-8 seconds)</div>
+    <input type="number" id="inhale-seconds" min="4" max="8" value="5">
+  </div>
+
+  <div class="setting">
+    <div class="setting-label">Exhale Duration (seconds)</div>
+    <div class="setting-description">How long to breathe out (4-8 seconds)</div>
+    <input type="number" id="exhale-seconds" min="4" max="8" value="5">
+  </div>
+
+  <div class="stats">
+    <div class="stats-title">Purchases Paused</div>
+    <div class="stats-number" id="pause-count">0</div>
+  </div>
+
+  <div class="footer">
+    Made with ❤️ for mindful spending
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

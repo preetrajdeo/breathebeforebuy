@@ -1,0 +1,8 @@
+# Zip files
+*.zip
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
