@@ -1,176 +1,89 @@
-# 🧘‍♂️ Breathe Before Buy
+# BreatheBeforeYouBuy — A Mindful Pause at the Point of Purchase
 
-A Chrome extension that helps you make mindful purchasing decisions by triggering a breathing exercise before completing online checkouts.
+> The most expensive second in e-commerce is the one before you click
+> "Place Order." This extension makes you use it.
 
-## 🎯 What It Does
+## The Problem
 
-When you land on a final checkout page, this extension:
-1. **Detects final checkout pages** - Monitors for "Place Order" / "Buy Now" buttons
-2. **Waits 3-5 seconds** - Gives you time to review the page
-3. **Automatically triggers** - Shows full-screen breathing overlay BEFORE you can click
-4. **Guides breathing** - Beautiful animated breathing circle with progress tracking
-5. **Disables buttons** - Purchase buttons are disabled during the breathing exercise
-6. **Makes you reflect** - After breathing, asks if you still want to proceed
+E-commerce is engineered for speed. One-click checkout, saved payment methods,
+urgency timers — every design decision reduces friction between intent and
+purchase. For impulse buyers, that friction removal is the problem.
 
-This automatic pause helps reduce impulse buying and saves you money!
+Budgeting apps address spending after the fact. BreatheBeforeYouBuy intervenes
+at the highest-leverage moment: the final checkout button.
 
----
+## The Solution
 
-## 🚀 How to Test/Install
+A Chrome extension that detects final purchase buttons (not "Add to Cart" or
+"Proceed to Checkout" — the actual "Place Order" moment) and triggers a 30-second
+breathing exercise before re-enabling the button.
 
-### 1. Load Extension in Chrome
+After breathing, users are asked: "Do you still want this?" That pause is the
+product.
 
-1. **Open Chrome** and go to `chrome://extensions/`
-2. **Enable Developer Mode** (toggle in top right)
-3. **Click "Load unpacked"**
-4. **Select the folder**: `/Users/preetrajdeo/Desktop/BreatheBeforeYouBuy`
-5. The extension icon should appear in your toolbar
+## Product Decisions & Tradeoffs
 
-### 2. Test on Shopping Sites
+**Auto-trigger vs click-trigger** — I chose to trigger automatically on page load
+rather than on button click. The behavioral reasoning: by the time your finger is
+on "Buy Now," the decision is already made psychologically. Triggering earlier
+creates actual reflection time. Tradeoff: more intrusive UX, higher chance of
+user disabling the extension.
 
-The extension triggers when you click **final purchase buttons** with text like:
-- "Place Order", "Buy Now", "Complete Purchase", "Confirm Order", "Pay Now"
-- **Does NOT trigger** on "Proceed to Checkout" or "Add to Cart" buttons
+**3-second delay before overlay appears** — Gives users time to review the page
+before the intervention. Without this, the overlay felt like a bug. This was
+discovered in testing, not upfront — a lesson in not shipping without using the
+product yourself.
 
-**Test Sites:**
-- **Amazon**: Go to cart → Proceed to checkout → Click "Place your order" (final button)
-- **eBay**: Add item → Checkout → Click "Confirm and pay"
-- **Etsy**: Add to cart → Purchase → Click final "Place order" button
-- **Any Shopify store**: Add to cart → Checkout → Click "Complete order"
+**Disable buttons during breathing** — Users could dismiss the overlay and bypass
+the exercise if buttons stayed enabled. Disabling them is the only way to enforce
+the pause. It's paternalistic by design — which is the point.
 
-### 3. Trigger the Breathing Overlay
+**No purchase tracking by default** — Analytics would make this more compelling
+as a product, but I prioritized user trust. The extension collects nothing by
+default.
 
-1. Navigate to a final checkout page (with "Place Order" button visible)
-2. Wait 3-5 seconds after the page loads
-3. The breathing overlay should automatically appear
-4. Purchase buttons will be disabled during breathing
-5. Follow the breathing animation for 3 cycles
-6. Choose to continue or cancel the purchase
+## Traction & What the Data Is Telling Me
 
----
+**158 installs** since launching in late 2025. But the uninstall rate is high.
 
-## ⚙️ Settings
+My leading hypothesis: the trigger is firing too broadly. The extension is
+designed to intercept final checkout pages, but detection heuristics may be
+matching earlier in the purchase funnel — product pages, cart pages — where the
+intervention feels disruptive rather than helpful. Getting interrupted mid-browse
+is annoying. Getting interrupted at "Place Order" is the point.
 
-Click the extension icon in Chrome toolbar to access settings:
+This is a classic precision problem: the right intervention at the wrong moment
+destroys the experience. The data is telling me I need to tighten the trigger,
+not the concept.
 
-- **Enable/Disable** - Turn breathing intervention on/off
-- **Number of Breaths** - Choose 3-10 breath cycles
-- **Inhale Duration** - 3-10 seconds
-- **Exhale Duration** - 3-10 seconds
-- **Purchase Stats** - See how many times you've paused
+## Next Steps
 
----
+Three directions I'm evaluating to improve retention:
 
-## 📁 Project Structure
+**1. Replace breathing with a game or video**
+The breathing exercise is the right behavioral mechanic (force a pause, create
+space for reflection) but may not be the right format. Alternatives worth testing:
+- A short micro-game the user has to complete before the button re-enables —
+  more entertaining, same forced pause
+- A funny or trending TikTok/YouTube clip that plays automatically — lightens
+  the mood, disrupts the dopamine loop differently, and could become a shareable
+  feature in itself
 
-```
-BreatheBeforeYouBuy/
-├── manifest.json         # Extension configuration
-├── content.js           # Checkout detection & overlay injection
-├── breathing.css        # Beautiful breathing animation styles
-├── popup.html           # Settings popup UI
-├── popup.js             # Settings logic
-├── icon-128.png         # Extension icon
-└── README.md            # This file
-```
+**2. User-controlled website allowlist**
+Currently the extension triggers across all e-commerce sites. A better model:
+let users choose which sites it activates on. Someone might want the intervention
+on Amazon (high-impulse) but not on their regular grocery delivery. Giving users
+control over scope reduces the "always on" annoyance while keeping the value for
+the sites that matter most to them.
 
----
+**3. Smarter trigger detection**
+Before changing the intervention format, tighten the detection. The extension
+should only fire when a "Place Order" / "Confirm and Pay" button is the primary
+CTA — not on product listing pages or cart pages. This alone may significantly
+reduce the perceived intrusiveness.
 
-## 🎨 How It Works
+## Status
 
-### Automatic Triggering
+Published · 158 installs · Chrome Web Store · Launched late 2025
 
-The extension automatically detects final checkout pages and triggers breathing:
-
-1. **Page Detection**
-   - Scans page for final purchase buttons: "Place Order", "Buy Now", "Complete Purchase"
-   - **Does NOT trigger** on preliminary "Proceed to Checkout" pages
-   - Uses both URL patterns and button text matching
-
-2. **Automatic Trigger Flow**
-   - Waits 1 second for page to fully load
-   - Checks if final purchase buttons are present
-   - Waits configured delay (3-5 seconds) to give you time to review
-   - Automatically shows breathing overlay BEFORE you can click
-   - Disables purchase buttons during breathing exercise
-   - Re-enables buttons after completion
-
-3. **Smart Prevention**
-   - Only triggers once per page load
-   - Respects user's enable/disable setting
-   - Works with single-page applications (SPAs)
-
-### Breathing Animation
-
-- **Expanding Circle**: Inhale phase (5 seconds default)
-- **Contracting Circle**: Exhale phase (5 seconds default)
-- **Smooth Transitions**: CSS animations with easing
-- **Progress Bar**: Shows how many breaths remaining
-- **Completion Screen**: Reflection question before continuing
-
----
-
-## 🧪 Testing Checklist
-
-- [ ] Extension loads without errors
-- [ ] Icon appears in Chrome toolbar
-- [ ] Settings popup opens and saves changes
-- [ ] Detects Amazon checkout page
-- [ ] Intercepts "Place Order" button click
-- [ ] Breathing overlay appears with animation
-- [ ] Circle expands/contracts smoothly
-- [ ] Counter counts down breaths
-- [ ] Progress bar fills up
-- [ ] "Continue" button works after breathing
-- [ ] "Skip" button works (removes overlay)
-- [ ] "I'll Think About It" goes back
-
----
-
-## 🐛 Known Issues / TODO
-
-- [ ] May not work on all checkout pages (detection needs refinement)
-- [ ] Some sites use custom button elements (need more patterns)
-- [ ] No analytics yet (track how many purchases prevented)
-- [ ] Could add "reflection questions" after breathing
-- [ ] Could add spending stats/tracking
-- [ ] Icon is placeholder (need custom breathing icon)
-
----
-
-## 🎯 Next Steps
-
-1. **Test on more sites** - Amazon, eBay, Etsy, Shopify stores
-2. **Refine detection** - Add more URL/button patterns
-3. **Add analytics** - Track effectiveness
-4. **Improve UX** - Better animations, reflection questions
-5. **Chrome Web Store** - Polish and submit
-
----
-
-## 💡 Ideas for Future
-
-- **Cooling-off period**: Force 24-hour wait for big purchases
-- **Price threshold**: Only trigger for purchases over $X
-- **Spending analytics**: Track monthly spending, show trends
-- **Reflection questions**: "Do you really need this?", "Can you afford this?"
-- **Budget integration**: Connect with Mint, YNAB
-- **Social features**: Share savings with friends
-- **Custom breathing patterns**: Box breathing, 4-7-8, etc.
-
----
-
-## 🙏 Credits
-
-Made with ❤️ for mindful spending
-
-**Inspiration:**
-- Behavioral economics research on impulse buying
-- Mindfulness and breathing exercises
-- Financial wellness movement
-
----
-
-## 📝 License
-
-MIT License - Feel free to use, modify, and distribute!
+**Stack**: Vanilla JS · Chrome MV3 · MutationObserver (SPA navigation)
